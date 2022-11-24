@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>Validate IBAN</title>
+</head>
+
+<style>
+    .hidden {
+        display: none
+    }
+    .open {
+        display: block
+    }
+</style>
+
+<script>
+    function validateIBAN() {
+        iban = document.getElementById('IBAN').value
+        if (iban === "") {
+            console.log('NO CONTENT')
+        } else {
+            $.ajax ({
+                type: 'GET',
+                url: '/validate-iban/' + iban,
+                success: function(data) {
+                    if (data.status == 200) {
+                        document.getElementById('validate-input').className = 'hidden';
+                        if (data.message == true) {
+                            document.getElementById('validate-output-ok').className = 'open';
+                            document.getElementById('IBAN-code').innerHTML = iban
+                        } else {
+                            document.getElementById('validate-output-error').className = 'open';
+                            document.getElementById('client-iban-e').innerHTML = iban
+                        }
+                        
+                    } else {
+                        document.getElementById('message').innerHTML = data.message; 
+                        
+                    } 
+                }
+            })
+            
+        }
+    }
+
+    function back() {
+        document.getElementById('validate-input').className = 'open';
+        document.getElementById('validate-output-error').className = 'hidden';
+        document.getElementById('validate-output-ok').className = 'hidden';
+        document.getElementById('message').innerHTML = '';
+    }
+</script>
+
+<body>
+
+    <div style='width: 400px; margin: auto; position: relative; top: 200px' id='validate-input'>
+        
+        <label class="form-label" for="customFile" style='margin-bottom: 20px; font-size: 20px; font-weight: 700'>Validate an <span style='color: red'>IBAN</span>:</label>
+        <input type="text" name = "IBAN" class="form-control" id="IBAN" required placeholder='MEkk bbbc cccc cccc cccc xx'/>
+        <input type = "submit" value = "Submit" onClick=validateIBAN() class="btn btn-outline-dark w-100 mt-3" /></p>
+        <p id='message' style='color: red; font-size: smaller'>ERROR MESSAGE</p>
+    </div>
+    <div style='width: 400px; margin: auto; position: relative; top: 200px' id='validate-output-ok' class='hidden'>
+        <label class="form-label" for="customFile" style='margin-bottom: 20px; font-size: 20px; font-weight: 700'>Congratulation! The <span style='color: red'>IBAN</span> is valid</label>
+        <p>Your <span style='color: red'>IBAN</span> <span id='IBAN-code'></span></p>
+        <input type = "submit" value = "Back" onClick=back() class="btn btn-outline-dark w-100 mt-3" /></p>
+    </div>
+    <div style='width: 400px; margin: auto; position: relative; top: 200px' id='validate-output-error' class='hidden'>
+        <label class="form-label" for="customFile" style='margin-bottom: 20px; font-size: 20px; font-weight: 700'>Sorry, given <span style='color: red'>IBAN</span> is not valid</label>
+        <p>Your <span style='color: red'>IBAN</span>: <span id='client-iban-e'></span></p>
+        <input type = "submit" value = "Back" onClick=back() class="btn btn-outline-dark w-100 mt-3" /></p>
+    </div>
+
+</body>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+</html>
