@@ -20,7 +20,7 @@ def validateIBAN(client_iban:str) -> json:
         # Instantiate IBAN instance
         iban = IBAN(client_iban)
         
-        # Make a pre validation of IBAN format
+        # Make a pre-validation of IBAN format
         status = iban.general_validation()
         print(f'IBAN Pre Validation status: {status}')
         

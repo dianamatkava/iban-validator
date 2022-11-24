@@ -35,7 +35,7 @@ class IBAN:
     def general_validation(self) -> IBANValidationStatus:
         """ Validate the IBAN format """     
         
-        # Check if country code valid
+        # Check if country code contains only characters
         if bool(re.search(r'\d', self.country_code)):
             status = IBANValidationStatus(
                 400, 'Error Bad Request: Country code should not contain digits'
@@ -51,13 +51,13 @@ class IBAN:
             return status
         country = country[0]
         
-        # Check if iban format for contry exist
+        # Check if IBAN format for country exist
         ibanformat_obj = IBANFormat.query.filter_by(country=country.id).all()
         if not ibanformat_obj:
             status = IBANValidationStatus(
                 404, 
                 f'''Error Not Found: IBANFormat not 
-                Found for this country: {country.name}'''
+                Found for country: {country.name}'''
             )
             return status
         ibanformat_obj = ibanformat_obj[0]
@@ -65,20 +65,20 @@ class IBAN:
         # Check if IBAN algorithm exist
         algorithm_obj = IBANAlgorithm.query.filter_by(
             id=ibanformat_obj.iban_algorithm
-        )[0]
+        ).all()
         if not algorithm_obj:
             status = IBANValidationStatus(
                 404, 'Error Not Found: IBANCountry not Found'
             )
             return status
-        self.algorithm = iban_conf[algorithm_obj.name]
+        self.algorithm = iban_conf[algorithm_obj[0].name]
         
-        # Check if iban length is valid
+        # Check if IBAN length is valid
         if len(self.raw_iban) + len(self.country_code) != ibanformat_obj.total_len:
             status = IBANValidationStatus(
                 400, 
                 f'''Error Bad Request: Length of characters is 
-                invalid for this country: {country.name}'''
+                invalid for country: {country.name}'''
             )
             return status
          
