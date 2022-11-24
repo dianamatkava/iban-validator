@@ -12,3 +12,9 @@ pip install -r requirements.txt
 Run server:
 flask --app app --debug run
 
+Init DB:
+flask db init
+flask db migrate
+flask db upgrade
+
+
