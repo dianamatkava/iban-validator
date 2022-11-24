@@ -15,7 +15,7 @@ def main():
 
 @ibanb.route('/validate-iban/<client_iban>', methods=['GET'])
 def validateIBAN(client_iban:str) -> json:
-    print(client_iban)
+    
     if client_iban and len(client_iban) > 2:
         # Instantiate IBAN instance
         iban = IBAN(client_iban)
