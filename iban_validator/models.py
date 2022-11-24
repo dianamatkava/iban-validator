@@ -56,7 +56,7 @@ class IBANFormat(db.Model):
 # Create Inital DB
 
 @event.listens_for(IBANCountryChar.__table__, 'after_create')
-def create_iban_country(*args, **kwargs):
+def create_iban_country_char(*args, **kwargs):
     db.session.add(IBANCountryChar(char='M', value='22'))
     db.session.add(IBANCountryChar(char='E', value='14'))
     db.session.commit()
@@ -69,13 +69,13 @@ def create_iban_country(*args, **kwargs):
     
     
 @event.listens_for(IBANAlgorithm.__table__, 'after_create')
-def create_iban_country(*args, **kwargs):
+def create_iban_algorithm(*args, **kwargs):
     db.session.add(IBANAlgorithm(name='ISO 7064 MOD-97-10'))
     db.session.commit()
     
 
 @event.listens_for(IBANFormat.__table__, 'after_create')
-def create_iban_country(*args, **kwargs):
+def create_iban_format(*args, **kwargs):
     db.session.add(IBANFormat(
         country=IBANCountry.query.filter_by(name='Montenegro')[0].id,
         iban_algorithm=IBANAlgorithm.query.filter_by(name='ISO 7064 MOD-97-10')[0].id,
