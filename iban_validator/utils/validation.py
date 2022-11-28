@@ -58,7 +58,7 @@ class IBAN:
         country_chars = IBANCountryChar.query.filter(
             IBANCountryChar.char.in_([char.upper() for char in self.country_code])
         ).all()
-        if len(country_chars) != 2: # should make check <2> more generic
+        if len(country_chars) != 2: # TODO: should make check <2> more generic
             status = IBANValidationStatus(
                 404, 'Error Not Found: IBANCountryChar not Found in database'
             )
