@@ -1,4 +1,4 @@
-#### The project hosted by following address: https://iban-validator-v.herokuapp.com/ (Not available for now)
+#### The project hosted by following address: https://iban-validator-v.herokuapp.com/ (Not available anymore)
 
 ## Create and activate virtual environment:
 ```bash
