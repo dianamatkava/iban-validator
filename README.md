@@ -1,3 +1,7 @@
+# IBAN Validator for Montenegro
+
+<img src="./media/IBANValidatorPreview.gif" alt="IBAN Validator Preview" width="300">
+
 #### The project hosted by following address: https://iban-validator-v.herokuapp.com/ (Not available anymore)
 
 ## Create and activate virtual environment:
